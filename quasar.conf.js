@@ -92,7 +92,15 @@ module.exports = function (/* ctx */) {
       importStrategy: 'auto',
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'LoadingBar',
+        'Notify'
+      ],
+
+      config: {
+        LoadingBar: {},
+        notify: {}
+      }
     },
 
     // animations: 'all', // --- includes all animations
@@ -176,7 +184,7 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'client_q'
+        appId: 'projectfinch'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

@@ -28,6 +28,7 @@
           header
           class="text-grey-8"
         >
+          <TelegramBotSidebar></TelegramBotSidebar>
         </q-item-label>
       </q-list>
     </q-drawer>
@@ -50,15 +51,24 @@
 
 <script>
 
+import TelegramBotSidebar from './../components/TelegramBotSidebar'
+
 export default {
   name: 'MainLayout',
-
+  components: {
+    TelegramBotSidebar
+  },
   data () {
     return {
       leftDrawerOpen: false,
-      essentialLinks: [
-
-      ]
+      botData: {
+        platform: null
+      }
+    }
+  },
+  methods: {
+    useBot: function () {
+      console.log('Should we?')
     }
   }
 }
