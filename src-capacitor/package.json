@@ -1,0 +1,12 @@
+{
+  "name": "client_q",
+  "version": "0.0.1",
+  "description": "Chatbots made easy",
+  "author": "Tobias Andersen <dappjump@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^2.2.1",
+    "@capacitor/cli": "^2.0.0",
+    "@capacitor/core": "^2.0.0"
+  }
+}

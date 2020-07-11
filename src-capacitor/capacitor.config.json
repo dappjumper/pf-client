@@ -1,0 +1,7 @@
+{
+  "appId": "io.dappjump.io.chat",
+  "appName": "Project Finch",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

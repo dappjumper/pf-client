@@ -55,6 +55,7 @@ export default {
       this.stateNonce++
     },
     useBot: function (bot) {
+      console.log(bot)
       localStorage.setItem('localBot', JSON.stringify(bot))
       this.state = 'ready'
       this.localBot = bot

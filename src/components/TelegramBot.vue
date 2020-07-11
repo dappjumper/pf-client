@@ -1,8 +1,7 @@
 <template>
   <div>
-    <p>
-      <b>ID: </b>{{ localBot.id }}<br/>
-      <b>Username: </b>@{{ localBot.username }}
+    <p :key="index" v-for="(value, name, index) in localBot.bot">
+      <b>{{name}}: </b>{{value}}<br/>
     </p>
   </div>
 </template>

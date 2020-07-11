@@ -57,8 +57,10 @@ export default {
       this.tryApiKey(this.apikey)
     },
     tryApiKey (apikey) {
-      axios.post(this.endpoint + '/telegram/checkIn', {
-        apikey: apikey
+      axios.post(this.endpoint + '/telegram/checkIn', {}, {
+        headers: {
+          'X-API-KEY': apikey
+        }
       })
         .then((response) => {
           if (!response.data.error) {
