@@ -1,10 +1,16 @@
 <template>
   <div>
     <p :key="index" v-for="(value, name, index) in localBot.bot">
-      <b>{{name}}: </b>{{value}}<br/>
+      <b>{{name | readableProperty }}: </b>{{value | readableType}}<br/>
     </p>
   </div>
 </template>
+
+<style scoped>
+  b {
+    text-transform: capitalize;
+  }
+</style>
 
 <script>
 
@@ -22,6 +28,23 @@ export default {
   },
   methods: {
 
+  },
+  filters: {
+    readableProperty: (value) => {
+      return value.replace(/_/g, ' ')
+    },
+    readableType: (value) => {
+      let returnvalue = value
+      switch (value) {
+        case true:
+          returnvalue = 'yes'
+          break
+        case false:
+          returnvalue = 'no'
+          break
+      }
+      return returnvalue
+    }
   }
 }
 </script>
