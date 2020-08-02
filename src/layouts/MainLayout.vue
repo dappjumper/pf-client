@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated v-if="loggedIn">
       <q-toolbar>
         <q-btn
           flat
@@ -60,6 +60,7 @@ export default {
   },
   data () {
     return {
+      loggedIn: false,
       leftDrawerOpen: false,
       botData: {
         platform: null
