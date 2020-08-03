@@ -32,3 +32,12 @@ export function externalQuery ({ state, setters }, payload) {
 export function internalQuery ({ state, setters }, payload) {
   return query({ state, setters }, payload, true)
 }
+
+export const logOut = (state) => {
+  state.apikey = ''
+  state.data = {}
+  state.isLoggedIn = false
+  state.allowInternal = false
+  localStorage.removeItem('apikey')
+  localStorage.removeItem('allowInternal')
+}

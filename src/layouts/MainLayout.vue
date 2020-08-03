@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated v-if="loggedIn">
+    <q-header elevated v-if="isLoggedIn">
       <q-toolbar>
         <q-btn
           flat
@@ -14,6 +14,7 @@
           Project Finch
         </q-toolbar-title>
         <router-link to="/">Back</router-link>
+        <a @click='forget'>Log out</a>
         <div>rf v0.0.1</div>
       </q-toolbar>
     </q-header>
@@ -52,6 +53,7 @@
 <script>
 
 import TelegramBotSidebar from './../components/TelegramBotSidebar'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'MainLayout',
@@ -67,9 +69,18 @@ export default {
       }
     }
   },
+  computed: {
+    isLoggedIn () {
+      return this.$store.state.localBot.isLoggedIn
+    }
+  },
   methods: {
-    useBot: function () {
-      console.log('Should we?')
+    ...mapActions('localBot', [
+      'logOut'
+    ]),
+    forget () {
+      this.logOut()
+      window.location.reload()
     }
   }
 }

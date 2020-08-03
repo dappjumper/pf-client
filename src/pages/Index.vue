@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <BotController v-on:status="botStatusChanged"></BotController>
+    <BotController></BotController>
   </q-page>
 </template>
 
@@ -14,20 +14,19 @@
 
 // import ApiKeyEntry from './../components/ApiKeyEntry'
 import BotController from './../components/BotController'
+import { mapState } from 'vuex'
 
 export default {
   name: 'PageIndex',
   data: () => {
     return {}
   },
-  mounted: function () {},
+  computed: mapState(['localBot']),
+  mounted: function () {
+  },
   components: {
     BotController
   },
-  methods: {
-    botStatusChanged: function (val) {
-      console.log('Status changed: ' + val)
-    }
-  }
+  methods: {}
 }
 </script>
