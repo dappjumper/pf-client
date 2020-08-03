@@ -5,10 +5,10 @@ export function someAction (context) {
 
 import axios from 'axios'
 
-function query ({ state, setters }, payload, internal) {
+function query ({ state, setters }, payload, endpointType) {
   return new Promise((resolve, reject) => {
     const apikey = payload.apikey || state.apikey
-    const url = state.endpoint[(internal ? 'internal' : 'external')](payload.method, apikey)
+    const url = state.endpoint[endpointType || 'internal'](payload.method, apikey)
     const options = {
       method: (payload.data ? 'post' : 'get'),
       url: url,
@@ -26,11 +26,11 @@ function query ({ state, setters }, payload, internal) {
 }
 
 export function externalQuery ({ state, setters }, payload) {
-  return query({ state, setters }, payload, false)
+  return query({ state, setters }, payload, 'external')
 }
 
 export function internalQuery ({ state, setters }, payload) {
-  return query({ state, setters }, payload, true)
+  return query({ state, setters }, payload, 'internal')
 }
 
 export const logOut = (state) => {

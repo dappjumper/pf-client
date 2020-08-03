@@ -6,7 +6,7 @@
 
 <style scoped>
   .loader {
-    color: #ffffff;
+    color: #333333;
     font-size: 90px;
     text-indent: -9999em;
     overflow: hidden;
@@ -20,22 +20,23 @@
     margin-left:-0.5em;
     -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
     animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    opacity:1;
   }
   .loadContainer {
+    background:#fafafa;
     float:left;
     position:fixed;
     top:0;
     left:0;
     height:100vh;
     width:100vw;
-    background-color:#333333;
     pointer-events:none;
     opacity:0;
     transition: all .5s;
-    transition-delay: .5s;
+    transition-delay: .1s;
   }
   .loadContainer, .loader {
-    z-index:9999;
+    z-index:99999999;
   }
   .loadContainer.active {
     opacity:1;

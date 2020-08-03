@@ -2,8 +2,8 @@ export const setActiveBot = (state, payload) => {
   if (!payload.apikey || !payload.data) return false
   state.apikey = payload.apikey
   state.data = payload.data
-  state.isLoggedIn = true
   localStorage.setItem('apikey', payload.apikey)
+  state.isLoggedIn = true
 }
 
 export const setLoggedIn = (state, data) => {
