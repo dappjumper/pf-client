@@ -29,7 +29,7 @@
               :rules="[v => !!v || 'Please type your key here']"
             />
 
-            <q-toggle v-on:input="$store.commit('localBot/setAllowInternal', accept)" v-model="accept" label="Allow this service to use your key for additional functionality" />
+            <q-toggle unselectable v-on:input="$store.commit('localBot/setAllowInternal', accept)" v-model="accept" label="Allow this service to use your key for additional functionality" />
 
             <div>
               <q-btn label="Submit" type="submit" color="primary"/>

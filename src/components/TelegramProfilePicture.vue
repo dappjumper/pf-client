@@ -49,6 +49,7 @@ export default {
       })
         .then((result) => {
           if (result.data.ok) {
+            if (!result.data.result.photos[0]) return false
             this.externalQuery({
               method: 'getFile',
               save: 'idToPhoto_' + this.user.id,
