@@ -12,7 +12,6 @@
 
     <q-drawer
             v-model="leftDrawerOpen"
-            show-if-above
             :width="200"
             :breakpoint="400"
           >
@@ -85,12 +84,15 @@
 </template>
 
 <style>
+  #q-app {
+    overflow-x: hidden;
+  }
   .tobottom {
     position:fixed;
     bottom:0;
   }
   .fullscreen {
-    border-top-left-radius:8px!important;
+    border-top-left-radius:1rem!important;
   }
   body {
     background: #373B44;  /* fallback for old browsers */
