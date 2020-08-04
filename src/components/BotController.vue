@@ -1,9 +1,8 @@
 <template>
-  <div class="fullscreen" :class="{ state: true }">
+  <div class="fullscreen" :class="{ state: state }">
     <Spinner :active="state == 'loading'"/>
     <div :key="state" v-if="isLoggedIn">
-      Loaded
-      {{ $store.state.localBot }}
+      Hej med dig
     </div>
     <div class="form supercenter" v-if="!isLoggedIn">
       <q-form
@@ -103,22 +102,18 @@ export default {
       'externalQuery'
     ]),
     fetchInitialBotData: function (injectedApikey) {
-      console.log('InjectedKey = ', injectedApikey)
       this.externalQuery({
         method: 'getMe',
+        save: 'botGetMe',
         apikey: injectedApikey || this.apikey_input
       })
         .then((result) => {
           if (result.data.ok) {
-            this.$store.commit('localBot/setActiveBot', {
-              apikey: injectedApikey || this.apikey_input,
-              data: result.data.result
-            })
+            this.$store.commit('localBot/setLoggedIn')
             this.state = 'ready'
           }
         })
         .catch((error) => {
-          console.log('It failed', error)
           this.$q.notify({
             type: 'negative',
             message: 'API key did not work',

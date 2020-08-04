@@ -8,7 +8,6 @@ export const setActiveBot = (state, payload) => {
 
 export const setLoggedIn = (state, data) => {
   state.isLoggedIn = true
-  state.data = data
 }
 
 export const setAllowInternal = (state, data) => {

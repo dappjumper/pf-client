@@ -17,6 +17,7 @@ function query ({ state, setters }, payload, endpointType) {
     if (payload.data) options.data = payload.data
     axios(options)
       .then(response => {
+        if (payload.save) state.data[payload.save] = response.data.result
         resolve(response)
       })
       .catch(error => {
