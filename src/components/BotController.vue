@@ -61,6 +61,19 @@
     margin-left:-300px;
     transform:translate(0,-50%);
   }
+  @media only screen and (max-width: 600px) {
+    .supercenter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 32px;
+      transform: none;
+      width: auto;
+    }
+    .fullscreen {
+      border-top-left-radius:0!important;
+    }
+  }
 </style>
 
 <script>
