@@ -31,7 +31,15 @@ export default {
     ...mapActions('localBot', [
       'externalQuery'
     ]),
+    assignPath (path) {
+      this.avatarUrl = this.$store.state.localBot.endpoint.file(path)
+    },
     findAndDisplayPicture () {
+      if (this.$store.state.localBot.data) {
+        if (this.$store.state.localBot.data['idToPhoto_' + this.user.id]) {
+          return this.assignPath(this.$store.state.localBot.data['idToPhoto_' + this.user.id].file_path)
+        }
+      }
       this.externalQuery({
         method: 'getUserProfilePhotos',
         data: {
@@ -43,13 +51,14 @@ export default {
           if (result.data.ok) {
             this.externalQuery({
               method: 'getFile',
+              save: 'idToPhoto_' + this.user.id,
               data: {
                 file_id: result.data.result.photos[0].pop().file_id
               }
             })
               .then((result) => {
                 if (result.data.ok) {
-                  this.avatarUrl = this.$store.state.localBot.endpoint.file(result.data.result.file_path)
+                  this.assignPath(result.data.result.file_path)
                 }
               })
               .catch((error) => {
