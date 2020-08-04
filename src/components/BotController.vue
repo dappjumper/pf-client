@@ -2,7 +2,11 @@
   <div class="fullscreen" :class="{ state: state }">
     <Spinner :active="state == 'loading'"/>
     <div :key="state" v-if="isLoggedIn">
-      Hej med dig
+      <DashboardPage page="dashboard" v-if="$route.path == '/app'"/>
+      <DashboardPage page="chat" v-if="$route.path == '/app/chat'"/>
+      <DashboardPage page="statistics" v-if="$route.path == '/app/statistics'"/>
+      <DashboardPage page="modules" v-if="$route.path == '/app/modules'"/>
+      <DashboardPage page="settings" v-if="$route.path == '/app/settings'"/>
     </div>
     <div class="form supercenter" v-if="!isLoggedIn">
       <q-form
@@ -79,13 +83,15 @@
 <script>
 
 import Spinner from './Spinner'
+import DashboardPage from './dashboard/DashboardPage'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'BotController',
   props: ['serviceDomain'],
   components: {
-    Spinner: Spinner
+    Spinner: Spinner,
+    DashboardPage: DashboardPage
   },
   data: () => {
     return {
@@ -122,6 +128,7 @@ export default {
       })
         .then((result) => {
           if (result.data.ok) {
+            this.$store.commit('localBot/setApikey', injectedApikey || this.apikey_input)
             this.$store.commit('localBot/setLoggedIn')
             this.state = 'ready'
           }

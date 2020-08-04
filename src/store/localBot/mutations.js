@@ -6,6 +6,12 @@ export const setActiveBot = (state, payload) => {
   state.isLoggedIn = true
 }
 
+export const setApikey = (state, payload) => {
+  if (!payload) return false
+  state.apikey = payload
+  localStorage.setItem('apikey', payload)
+}
+
 export const setLoggedIn = (state, data) => {
   state.isLoggedIn = true
 }
