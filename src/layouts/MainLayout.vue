@@ -17,7 +17,7 @@
           >
             <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
               <q-list padding>
-                <q-item to="/app" clickable v-ripple>
+                <q-item unselectable @mousedown.native="goToPage('dashboard')" :class="{'active': page == 'dashboard'}" clickable v-ripple>
                   <q-item-section avatar>
                     <q-icon name="dashboard" />
                   </q-item-section>
@@ -27,7 +27,7 @@
                   </q-item-section>
                 </q-item>
 
-                <q-item to="/app/chat" clickable v-ripple>
+                <q-item unselectable @mousedown.native="goToPage('chat')" :class="{'active': page == 'chat'}" clickable v-ripple>
                   <q-item-section avatar>
                     <q-icon name="question_answer" />
                   </q-item-section>
@@ -37,7 +37,7 @@
                   </q-item-section>
                 </q-item>
 
-                <q-item to="/app/statistics" active clickable v-ripple>
+                <q-item unselectable @mousedown.native="goToPage('statistics')" :class="{'active': page == 'statistics'}" clickable v-ripple>
                   <q-item-section avatar>
                     <q-icon name="timeline" />
                   </q-item-section>
@@ -47,7 +47,7 @@
                   </q-item-section>
                 </q-item>
 
-                <q-item to="/app/modules" clickable v-ripple>
+                <q-item unselectable @mousedown.native="goToPage('modules')" :class="{'active': page == 'modules'}" clickable v-ripple>
                   <q-item-section avatar>
                     <q-icon name="view_module" />
                   </q-item-section>
@@ -57,7 +57,7 @@
                   </q-item-section>
                 </q-item>
 
-                <q-item to="/app/settings" clickable v-ripple>
+                <q-item unselectable @mousedown.native="goToPage('settings')" :class="{'active': page == 'settings'}" clickable v-ripple>
                   <q-item-section avatar>
                     <q-icon name="settings" />
                   </q-item-section>
@@ -66,7 +66,7 @@
                     Settings
                   </q-item-section>
                 </q-item>
-                <q-item unclickable class="tobottom">
+                <q-item unselectable @mousedown.native="goToPage('about')" class="tobottom" :class="{'active': page == 'about'}" clickable v-ripple>
                   <q-item-section avatar>
                     <q-icon name="help_outline" />
                   </q-item-section>
@@ -92,6 +92,7 @@
   .tobottom {
     position:fixed;
     bottom:0;
+    width:100%;
   }
   .fullscreen {
     border-top-left-radius:1rem!important;
@@ -108,7 +109,7 @@
   .q-item.q-router-link--active, .q-item--active {
     color:white;
   }
-  .q-router-link--exact-active {
+  .q-router-link--exact-active, .q-item.active {
     background:rgba(255,255,255,0.3);
   }
   [unselectable] {
@@ -171,10 +172,20 @@ export default {
       return this.getSavedData('botGetMe')
     }
   },
+  mounted () {
+    if (this.$router.currentRoute.path === '/app') return false
+    const initialPath = this.$router.currentRoute.path.replace('/app/', '')
+    if (initialPath !== '') this.page = initialPath
+  },
   methods: {
     ...mapActions('localBot', [
       'logOut'
     ]),
+    goToPage (desiredPage) {
+      if (this.page === desiredPage) return false
+      this.$router.push('/app' + (desiredPage === 'dashboard' ? '' : '/' + desiredPage))
+      this.page = desiredPage
+    },
     forget () {
       this.logOut()
       window.location.reload()

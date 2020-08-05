@@ -7,6 +7,7 @@
       <DashboardPage page="statistics" v-if="$route.path == '/app/statistics'"/>
       <DashboardPage page="modules" v-if="$route.path == '/app/modules'"/>
       <DashboardPage page="settings" v-if="$route.path == '/app/settings'"/>
+      <DashboardPage page="about" v-if="$route.path == '/app/about'"/>
     </div>
     <div class="form supercenter" v-if="!isLoggedIn">
       <q-form
