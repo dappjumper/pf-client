@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Project Finch</string>
-    <string name="title_activity_main">Project Finch</string>
-    <string name="package_name">io.dappjump.io.chat</string>
-    <string name="custom_url_scheme">io.dappjump.io.chat</string>
-</resources>
