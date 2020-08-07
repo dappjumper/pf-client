@@ -22,6 +22,7 @@
               An API Key can be obtained from the official Telegram <a href="https://t.me/botfather" target="_blank">@botfather</a>
             </p>
             <q-input
+              dark
               filled
               v-model="apikey_input"
               label="API key *"
@@ -50,7 +51,8 @@
     width:100%;
     height:100%;
     z-index:1;
-    background: #fafafa;
+    background: #333333;
+    color:#fafafa;
   }
   .fullscreen.loading {
     background:#333333;
@@ -78,6 +80,9 @@
     .fullscreen {
       border-top-left-radius:0!important;
     }
+  }
+  a {
+    color:#fafafa;
   }
 </style>
 

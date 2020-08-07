@@ -6,7 +6,7 @@
 
 <style scoped>
   .loader {
-    color: #333333;
+    color: #fafafa;
     font-size: 90px;
     text-indent: -9999em;
     overflow: hidden;
@@ -23,7 +23,7 @@
     opacity:1;
   }
   .loadContainer {
-    background:#fafafa;
+    background:#333333;
     float:left;
     position:fixed;
     top:0;

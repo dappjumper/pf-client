@@ -1,17 +1,11 @@
 <template>
   <div>
-    <div v-if="allowInternally">
-      <transition name="pageTransition">
-        <component v-if="primed" :is="componentName"/>
-        <div v-if="!primed">
-          Loading your awesome {{ page }} content...
-        </div>
-      </transition>
-    </div>
-    <div v-if="!allowInternally">
-      <p>Please allow this service to use your API key</p>
-      <AllowInternalToggle />
-    </div>
+    <transition name="pageTransition">
+      <component :allowKey="allowInternally" v-if="primed" :is="componentName"/>
+      <div v-if="!primed">
+        Loading your awesome {{ page }} content...
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -21,8 +15,22 @@
     margin-left:0rem;
   }
   .pageTransition-enter, .pageTransition-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    position:absolute;
     opacity: 0;
     margin-left:3rem;
+  }
+  a {
+    color:#fafafa;
+  }
+</style>
+
+<style scoped>
+  h1 {
+    font-size:3rem;
+    line-height:3rem;
+    margin:0;
+    padding:0;
+    text-transform: capitalize;
   }
 </style>
 
@@ -33,7 +41,7 @@ import * as DashboardPages from './pages'
 
 export default {
   name: 'DashboardPage',
-  props: ['page'],
+  props: ['page', 'internalAllowed'],
   components: {
     ...DashboardPages,
     AllowInternalToggle

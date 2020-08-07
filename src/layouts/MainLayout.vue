@@ -3,7 +3,7 @@
     <q-header v-if="isLoggedIn">
       <q-toolbar>
         <q-toolbar-title>
-          Project Finch
+          <span class="precrumb">Project Finch</span><span class="breadcrumb">{{ page | breadcrumbify }}</span>
         </q-toolbar-title>
         <router-link to="/">Home</router-link>
         <a @click='forget'>Log out</a>
@@ -99,8 +99,8 @@
   }
   body {
     background: #373B44;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top left, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top left, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(to bottom right, #444444, #333333);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom right, #444444, #333333); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
   .q-drawer, .q-header {
     background:none!important;
@@ -134,6 +134,14 @@
     padding-right:16px;
     color:#fafafa;
     cursor: pointer;
+  }
+  .breadcrumb {
+    font-weight:800;
+    text-transform:capitalize;
+  }
+  .precrumb {
+    font-weight:100;
+    margin-right:1rem;
   }
 
 </style>
@@ -176,6 +184,11 @@ export default {
     if (this.$router.currentRoute.path === '/app') return false
     const initialPath = this.$router.currentRoute.path.replace('/app/', '')
     if (initialPath !== '') this.page = initialPath
+  },
+  filters: {
+    breadcrumbify (value) {
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
   },
   methods: {
     ...mapActions('localBot', [
