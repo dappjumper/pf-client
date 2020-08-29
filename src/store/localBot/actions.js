@@ -15,6 +15,11 @@ function query ({ state, setters }, payload, endpointType) {
       timeout: 4000
     }
     if (payload.data) options.data = payload.data
+    if (endpointType === 'internal') {
+      options.headers = {
+        'X-API-KEY': payload.apikey
+      }
+    }
     axios(options)
       .then(response => {
         if (payload.save) state.data[payload.save] = response.data.result

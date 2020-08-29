@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <transition name="pageTransition">
-      <component :allowKey="allowInternally" v-if="primed" :is="componentName"/>
+   <transition name="pageTransition">
+  <q-page>
+      <component v-if="primed" :user="user" :is="componentName"/>
       <div v-if="!primed">
         Loading your awesome {{ page }} content...
       </div>
-    </transition>
-  </div>
+  </q-page>
+  </transition>
 </template>
 
 <style>
@@ -16,11 +16,13 @@
   }
   .pageTransition-enter, .pageTransition-leave-to /* .fade-leave-active below version 2.1.8 */ {
     position:absolute;
+    width:100%;
+    top:32px;
+    left:32px;
     opacity: 0;
     margin-left:3rem;
   }
-  a {
-    color:#fafafa;
+  .q-page {
   }
 </style>
 
@@ -36,28 +38,28 @@
 
 <script>
 
-import AllowInternalToggle from './../AllowInternalToggle'
 import * as DashboardPages from './pages'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DashboardPage',
-  props: ['page', 'internalAllowed'],
+  props: ['page'],
   components: {
-    ...DashboardPages,
-    AllowInternalToggle
+    ...DashboardPages
   },
   data: () => {
     return {
-      allowInternally: false,
       primed: false
     }
   },
-  watch: {
-    '$store.state.localBot.allowInternal' (value) {
-      this.allowInternally = value
-    }
-  },
+  watch: {},
   computed: {
+    ...mapGetters('localBot', [
+      'getSavedData'
+    ]),
+    user () {
+      return this.getSavedData('botGetMe')
+    },
     apikey () {
       return this.$store.state.localBot.apikey
     },
@@ -68,10 +70,18 @@ export default {
     }
   },
   mounted: function () {
-    this.allowInternally = JSON.parse(this.$store.state.localBot.allowInternal)
-    this.primed = true
+    this.readyCheck()
   },
   methods: {
+    readyCheck () {
+      if (!this.primed) {
+        if (!this.user) {
+          setTimeout(this.readyCheck, 100)
+        } else {
+          this.primed = true
+        }
+      }
+    },
     getProperComponentName () {
       return 'DashboardIndex'
     }

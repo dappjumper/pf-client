@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header v-if="isLoggedIn">
+    <q-header v-if="isLoggedIn" style="box-shadow:1rem 1rem 1rem rgba(0,0,0,0.1)!important">
       <q-toolbar>
         <q-toolbar-title>
           <span class="precrumb">Project Finch</span><span class="breadcrumb">{{ page | breadcrumbify }}</span>
@@ -77,7 +77,7 @@
                 </q-item>
               </q-list>
             </q-scroll-area>
-            <UserBadge avatar="true" :user="getSavedData('botGetMe')"/>
+            <UserBadge @mousedown.native="goToPage('settings')" style="cursor:pointer" avatar="true" :user="getSavedData('botGetMe')"/>
           </q-drawer>
     <q-page-container>
       <router-view />
@@ -98,13 +98,15 @@
     border-top-left-radius:1rem!important;
   }
   body {
-    background: #373B44;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom right, #444444, #333333);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom right, #444444, #333333); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #fafafa;  /* fallback for old browsers */
+    color:#333333;
   }
-  .q-drawer, .q-header {
-    background:none!important;
+  .q-drawer, .q-header, header {
     color:#fafafa;
+    background:#204051;
+  }
+  .fullscreen a {
+    color:#333333;
   }
   .q-item.q-router-link--active, .q-item--active {
     color:white;
@@ -117,6 +119,13 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+  }
+  .fullscreen .q-page {
+    border-top-left-radius:16px;
+    border-top-right-radius:16px;
+    overflow:hidden;
+    box-sizing: border-box;
+    padding:1rem;
   }
 </style>
 

@@ -1,13 +1,10 @@
 <template>
   <q-page>
-    <BotController></BotController>
+    <BotController :rooted="$emit('rooted')"></BotController>
   </q-page>
 </template>
 
 <style scoped>
-  p {
-    color:rgba(0,0,0,0.5);
-  }
 </style>
 
 <script>

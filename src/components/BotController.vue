@@ -22,7 +22,6 @@
               An API Key can be obtained from the official Telegram <a href="https://t.me/botfather" target="_blank">@botfather</a>
             </p>
             <q-input
-              dark
               filled
               v-model="apikey_input"
               label="API key *"
@@ -31,10 +30,10 @@
               :rules="[v => !!v || 'Please type your key here']"
             />
 
-            <q-toggle unselectable v-on:input="$store.commit('localBot/setAllowInternal', accept)" v-model="accept" label="Allow this service to use your key for additional functionality" />
+            <q-toggle unselectable v-on:input="$store.commit('localBot/setAllowInternal', accept)" v-model="accept" label="Allow this service to use API key" />
 
             <div>
-              <q-btn label="Submit" type="submit" color="primary"/>
+              <q-btn style="transition: all .1s" :class="{notallowed: !accept}" label="Submit" type="submit" color="primary"/>
               <q-btn label="Back" type="reset" color="primary" flat class="q-ml-sm" />
             </div>
           </q-form>
@@ -43,20 +42,23 @@
 </template>
 
 <style scoped>
+  .notallowed {
+    pointer-events:none;
+    opacity:0.5;
+    filter:grayscale(100%);
+  }
   .fullscreen {
     position:absolute;
     padding:32px;
     top:0;
     left:0;
     width:100%;
-    height:100%;
+    height:100vh;
     z-index:1;
-    background: #333333;
-    color:#fafafa;
   }
   .fullscreen.loading {
-    background:#333333;
-    color:#fafafa;
+    background:#fafafa;
+    color:#333333;
   }
   .supercenter  {
     max-width:600px;
@@ -80,9 +82,6 @@
     .fullscreen {
       border-top-left-radius:0!important;
     }
-  }
-  a {
-    color:#fafafa;
   }
 </style>
 
@@ -117,6 +116,7 @@ export default {
     this.accept = JSON.parse(this.accept)
     if (!activeKey) {
       this.state = 'initial'
+      this.$emit('rooted')
     } else {
       this.state = 'loading'
       this.fetchInitialBotData(activeKey)
@@ -124,20 +124,22 @@ export default {
   },
   methods: {
     ...mapActions('localBot', [
-      'externalQuery'
+      'externalQuery',
+      'internalQuery'
     ]),
     fetchInitialBotData: function (injectedApikey) {
-      this.externalQuery({
-        method: 'getMe',
+      this.internalQuery({
+        method: 'checkIn',
         save: 'botGetMe',
+        data: {},
         apikey: injectedApikey || this.apikey_input
       })
         .then((result) => {
-          if (result.data.ok) {
-            this.$store.commit('localBot/setApikey', injectedApikey || this.apikey_input)
-            this.$store.commit('localBot/setLoggedIn')
-            this.state = 'ready'
-          }
+          console.log('result', result)
+          // if (result.data.ok) {
+          //   this.$store.commit('localBot/setApikey', injectedApikey || this.apikey_input)
+          //   this.$store.commit('localBot/setLoggedIn')
+          //   this.state = 'ready'
         })
         .catch((error) => {
           this.$q.notify({
@@ -150,7 +152,13 @@ export default {
         })
     },
     onSubmit: function () {
-      // TODO
+      if (!this.accept) {
+        return this.$q.notify({
+          type: 'negative',
+          message: 'Please allow this service to use your API key',
+          position: 'bottom-right'
+        })
+      }
       this.state = 'loading'
       this.fetchInitialBotData()
     },

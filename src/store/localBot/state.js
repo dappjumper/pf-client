@@ -11,7 +11,7 @@ export default function () {
         return 'https://api.telegram.org/bot' + (injectedApikey || retrieveFromLocalStorage('apikey')) + (method ? '/' + method : '')
       },
       internal: function (method) {
-        // TODO
+        return 'https://pf-api.dappjump.io/telegram' + (method ? '/' + method : '')
       },
       file: function (path, injectedApikey) {
         return 'https://api.telegram.org/file/bot' + (injectedApikey || retrieveFromLocalStorage('apikey')) + (path ? '/' + path : '')

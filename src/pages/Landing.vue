@@ -46,14 +46,14 @@
     text-decoration: none;
   }
   .q-page, .circle ellipse {
-    fill:#333333;
-    background:#333333;
+    fill:#fafafa;
+    background:#fafafa;
   }
   .hero {
     overflow:hidden;
     padding-top:1rem;
     text-align:center;
-    color:#fafafa;
+    color:#333333;
   }
   .hero .front {
     position:relative;
